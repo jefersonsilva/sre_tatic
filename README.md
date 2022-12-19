@@ -32,6 +32,12 @@ Configurar a infra-estrutura no Proveedor de Cloud escolhido para disponibilizar
 O projeto deverá ser adicionado em um Storage onde ficará disponível a URL para acessar a Calculador Online, os arquivos que vem ser subidos ao Storage estão na pasta (`build`)
 que será gerado ao rodar o comando de build. 
 
+As opções mais comuns de Storage do mercado são:
+
+- S3
+- Google Cloud Storage
+- Azure Storage
+
 ## Extras
 
 Além do desafio proposto temos alguns diferenciais:
