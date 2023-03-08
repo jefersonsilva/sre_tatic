@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "us-east-1"
-  profile = "jef"
+    region = "us-east-1"
+    profile = "jef"
+  
 }
-
 resource "aws_s3_bucket" "website" {
-  bucket = "calculadora-desafio"
+  bucket = "calc.jefersonsilva.in"
   acl    = "public-read"
 
   website {
@@ -12,61 +12,24 @@ resource "aws_s3_bucket" "website" {
     error_document = "error.html"
   }
 
-routing_rules = <<EOF
-[{
-    "Condition": {
-        "KeyPrefixEquals": "calculator/"
-    },
-    "Redirect": {
-        "ReplaceKeyPrefixWith": ""
-    }
-}]
-EOF
-
-
-
-
   tags = {
-    Name        = "desafio"
-    Environment = "dev"
+    Name        = "calculadora"
+    Environment = "Production"
   }
 }
 
-resource "aws_s3_bucket_policy" "website" {
-  bucket = aws_s3_bucket.website.id
 
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "PublicReadGetObject",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": [
-        "s3:GetObject"
-      ],
-      "Resource": [
-        "arn:aws:s3:::${aws_s3_bucket.website.bucket}/*"
-      ]
-    }
-  ]
-}
-POLICY
-}
 
-resource "aws_route53_zone" "zone" {
-  name = "jefersonsilva.in"
-}
-
-resource "aws_route53_record" "website" {
-  zone_id = aws_route53_zone.zone.zone_id
-  name    = "calculadora.jefersonsilva.in"
+resource "aws_route53_record" "calcdesafio" {
+  zone_id = "Z04130716X3SCR9L4MV9"
+  name    = "calc.jefersonsilva.in"
   type    = "A"
 
   alias {
-    name                   = aws_s3_bucket.website.website_endpoint
-    zone_id                = aws_route53_zone.zone.zone_id
+    name                   = aws_s3_bucket.website.website_domain
+    zone_id                = aws_s3_bucket.website.hosted_zone_id
     evaluate_target_health = false
   }
 }
+
+
