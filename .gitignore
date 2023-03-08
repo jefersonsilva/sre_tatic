@@ -1,3 +1,5 @@
 .terraform*
 terraform.tfstate
 terraform.tfstate.backup
+calculator/yarn.lock
+calculator/package-lock.json
