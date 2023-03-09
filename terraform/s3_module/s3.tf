@@ -1,10 +1,5 @@
-provider "aws" {
-    region = "us-east-1"
-    profile = "jef"
-  
-}
 resource "aws_s3_bucket" "website" {
-  bucket = "calc.jefersonsilva.in"
+  bucket = join(".", [var.bucket_name, var.deafault_domain])
   acl    = "public-read"
 
   website {
@@ -13,16 +8,14 @@ resource "aws_s3_bucket" "website" {
   }
 
   tags = {
-    Name        = "calculadora"
-    Environment = "Production"
+    Name        = var.tag_name
+    Environment = var.tag_env
   }
 }
 
-
-
 resource "aws_route53_record" "calcdesafio" {
-  zone_id = "Z04130716X3SCR9L4MV9"
-  name    = "calc.jefersonsilva.in"
+  zone_id = var.deafault_route_53_zone
+  name    = join(".", [var.bucket_name, var.deafault_domain])
   type    = "A"
 
   alias {
@@ -31,5 +24,3 @@ resource "aws_route53_record" "calcdesafio" {
     evaluate_target_health = false
   }
 }
-
-
