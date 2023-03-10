@@ -37,17 +37,3 @@ variable "deafault_domain" {
 }
 
 
-variable "deafault_profile" {
-    description = "Default profile aws account"
-    type =  string
-    default = "jef"
-  
-}
-
-variable "deafault_region" {
-    description = "default region"
-    type =  string
-    default = "us-east-1"
-  
-}
-
